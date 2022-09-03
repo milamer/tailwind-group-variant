@@ -71,9 +71,12 @@ function stackClose(
     )
   }
   if (machine.context.stack.length > 0) {
-    machine.context.stack
-      .at(-1)
-      ?.nestedMatches.push({...currentStack, endIdx: idx})
+    machine.context.stack[machine.context.stack.length - 1]?.nestedMatches.push(
+      {
+        ...currentStack,
+        endIdx: idx,
+      },
+    )
     machine.state = State['stack.Close']
   } else {
     currentStack.matches.push(
@@ -181,14 +184,14 @@ const transformMachine: TransformMachine = {
   },
   'stack.VariantOrWord': (idx, char, machineState) => {
     if (char === machineState.settings.separatorChar) {
-      machineState.context.stack
-        .at(-1)
-        ?.matches.push(
-          machineState.context.content.substring(
-            machineState.context.variantStartIdx,
-            idx,
-          ),
-        )
+      machineState.context.stack[
+        machineState.context.stack.length - 1
+      ]?.matches.push(
+        machineState.context.content.substring(
+          machineState.context.variantStartIdx,
+          idx,
+        ),
+      )
       machineState.state = State['stack.Init']
     } else if (char === machineState.settings.variantChar) {
       machineState.context.variantEndIdx = idx
