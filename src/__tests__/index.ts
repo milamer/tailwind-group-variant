@@ -60,20 +60,21 @@ const tests: Record<string, TestCase> = {
   },
 }
 
-for (const [
-  title,
-  {input, output, only = false, skip = false, options},
-] of Object.entries<TestCase>(tests)) {
-  const testFn = () => expect(createTransformer(options)(input)).toEqual(output)
+describe.each(Object.entries(tests))(
+  'group variants',
+  (title, {input, output, only = false, skip = false, options}) => {
+    const testFn = () =>
+      expect(createTransformer(options)(input)).toEqual(output)
 
-  if (only) {
-    test.only(title, testFn)
-  } else if (skip) {
-    test.skip(title, testFn)
-  } else {
-    test(title, testFn)
-  }
-}
+    if (only) {
+      test.only(title, testFn)
+    } else if (skip) {
+      test.skip(title, testFn)
+    } else {
+      test(title, testFn)
+    }
+  },
+)
 
 /*
 eslint
