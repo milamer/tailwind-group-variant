@@ -62,8 +62,8 @@ function stackClose(
   idx: number,
   hasWord: boolean,
 ) {
-  const currentStack = machine.context.stack.pop()
-  if (!currentStack) throw Error('Only call stackClose when there is a stack')
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const currentStack = machine.context.stack.pop()!
 
   if (hasWord) {
     currentStack.matches.push(
@@ -74,6 +74,7 @@ function stackClose(
     machine.context.stack
       .at(-1)
       ?.nestedMatches.push({...currentStack, endIdx: idx})
+    machine.state = State['stack.Close']
   } else {
     currentStack.matches.push(
       ...currentStack.nestedMatches.flatMap(nestedStack =>
@@ -87,8 +88,8 @@ function stackClose(
         .map(match => `${currentStack.variant}${match}`)
         .join(' '),
     })
+    machine.state = State.init
   }
-  machine.state = State['stack.Close']
 }
 
 function stackError(machine: TransformMachineState) {
@@ -172,7 +173,7 @@ const transformMachine: TransformMachine = {
     if (machineState.settings.badChars.includes(char)) {
       stackError(machineState)
     } else if (char === machineState.settings.expandClose) {
-      stackClose(machineState, idx, false)
+      stackError(machineState)
     } else {
       machineState.context.variantStartIdx = idx
       machineState.state = State['stack.VariantOrWord']
@@ -191,7 +192,7 @@ const transformMachine: TransformMachine = {
       machineState.state = State['stack.Init']
     } else if (char === machineState.settings.variantChar) {
       machineState.context.variantEndIdx = idx
-      machineState.state = State.variant
+      machineState.state = State['stack.Variant']
     } else if (char === machineState.settings.expandClose) {
       stackClose(machineState, idx, true)
     }
@@ -202,7 +203,7 @@ const transformMachine: TransformMachine = {
     } else if (machineState.settings.badChars.includes(char)) {
       stackError(machineState)
     } else {
-      machineState.state = State.variantOrWord
+      machineState.state = State['stack.VariantOrWord']
     }
   },
   'stack.Close': (idx, char, machineState) => {
@@ -210,9 +211,10 @@ const transformMachine: TransformMachine = {
       stackError(machineState)
     } else if (char === machineState.settings.expandClose) {
       stackClose(machineState, idx, false)
+    } else if (char === machineState.settings.separatorChar) {
+      machineState.state = State['stack.Init']
     } else {
-      machineState.context.variantStartIdx = idx
-      machineState.state = State['stack.VariantOrWord']
+      stackError(machineState)
     }
   },
 }
@@ -236,8 +238,8 @@ function transform(content: string, options?: TransformOptions) {
     },
   }
   for (let idx = 0; idx < content.length; ++idx) {
-    const char = content[idx]
-    if (!char) throw new Error('')
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const char = content[idx]!
     const handleIdxForState = transformMachine[machineState.state]
 
     handleIdxForState(idx, char, machineState)

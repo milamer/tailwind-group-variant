@@ -6,8 +6,6 @@
 
 ---
 
-<!-- **[Demo](https://codesandbox.io/s/wyk856yo48)** -->
-
 <!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
@@ -17,7 +15,6 @@
 [![All Contributors][all-contributors-badge]](#contributors-)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
-[![Examples][examples-badge]][examples]
 <!-- prettier-ignore-end -->
 
 ## The problem
