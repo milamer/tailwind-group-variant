@@ -1,0 +1,57 @@
+{
+  "name": "tailwind-group-variant",
+  "version": "0.0.0-semantically-released",
+  "description": "Group multiple tailwind classes into a single variant",
+  "main": "dist/tailwind-group-variant.cjs.js",
+  "module": "dist/tailwind-group-variant.esm.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "tailwindcss",
+    "variant",
+    "expand",
+    "group"
+  ],
+  "author": "Christian Schurr <fischerc.it@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/milamer/tailwind-group-variant"
+  },
+  "bugs": {
+    "url": "https://github.com/milamer/tailwind-group-variant/issues"
+  },
+  "homepage": "https://github.com/milamer/tailwind-group-variant#readme",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:toc": "npx doctoc .",
+    "build": "kcd-scripts build --bundle --environment BUILD_NAME:tailwindGroupVariant",
+    "lint": "kcd-scripts lint",
+    "setup": "npm install && npm run validate -s",
+    "test": "kcd-scripts test",
+    "typecheck": "kcd-scripts typecheck",
+    "test:update": "npm test -- --updateSnapshot --coverage",
+    "validate": "kcd-scripts validate"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.18.9"
+  },
+  "devDependencies": {
+    "kcd-scripts": "^12.2.1",
+    "typescript": "^4.8.2"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/kcd-scripts/eslint.js",
+    "rules": {
+      "import/extensions": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "max-lines-per-function": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ]
+}
