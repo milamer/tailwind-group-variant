@@ -1,9 +1,8 @@
-/* eslint-disable complexity */
 /**
  * @name tailwind-group-variant
  * @license MIT license.
  * @copyright (c) 2022 Christian Schurr
- * @author Christian Schurr <fischerc.it@gmail.com>
+ * @author Christian Schurr <chris@schurr.dev>
  */
 
 const whitespaceChars = [
