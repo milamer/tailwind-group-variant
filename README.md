@@ -294,7 +294,7 @@ where most of the setup is from.
 <!-- prettier-ignore-start -->
 [npm]: https://www.npmjs.com
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/github/workflow/status/milamer/tailwind-group-variant/validate?logo=github&style=flat-square
+[build-badge]: https://img.shields.io/github/actions/workflow/status/milamer/tailwind-group-variant/validate.yml?branch=main&logo=github&style=flat-square
 [build]: https://github.com/milamer/tailwind-group-variant/actions?query=workflow%3Avalidate
 [coverage-badge]: https://img.shields.io/codecov/c/github/milamer/tailwind-group-variant.svg?style=flat-square
 [coverage]: https://codecov.io/github/milamer/tailwind-group-variant
